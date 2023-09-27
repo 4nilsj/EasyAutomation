@@ -1,0 +1,100 @@
+Sub OpenWorkbook()
+'Open a workbook
+
+  'Open method requires full file path to be referenced.
+  Workbooks.Open "C:\Users\DELL\Documents\docdetails.xlsx"
+
+End Sub
+#Close a workbook
+Sub CloseWorkbook()
+'Close a workbook
+  Windows("docdetails.xlsx").Close SaveChanges:=True
+End Sub
+#copying data from another file
+Sub Copydata()
+OpenWorkbook
+
+'
+' copyOtherbook Macro
+'
+    Windows("docdetails.xlsx").Activate
+    Worksheets("Amma").Select
+    Range("A1").Select
+    Range(Selection, Selection.End(xlDown)).Select
+    Range(Selection, Selection.End(xlToRight)).Select
+    Selection.Copy
+    Windows("Test.xlsm").Activate
+    Range("A1").Select
+    ActiveSheet.Paste
+    Selection.End(xlDown).Offset(1, 0).Select
+    Windows("docdetails.xlsx").Activate
+    Worksheets("Appa").Select
+    Range(Selection, Selection.End(xlDown)).Select
+    Range(Selection, Selection.End(xlToRight)).Select
+    Application.CutCopyMode = False
+    Selection.Copy
+    Windows("Test.xlsm").Activate
+    ActiveSheet.Paste
+    Application.CutCopyMode = False
+    ActiveWorkbook.Save
+    CloseWorkbook
+    
+End Sub
+Sub AddBlankRows()
+    Dim ws As Worksheet
+    Dim LastRow As Long
+    Dim i As Long
+    
+    ' Specify the worksheet you want to work with
+    Set ws = ThisWorkbook.Sheets("Sheet1") ' Change "Sheet1" to your sheet's name
+    
+    ' Find the last row with data in column A
+    LastRow = ws.Cells(ws.Rows.Count, "A").End(xlUp).Row
+    
+    ' Loop through the rows in reverse order and add a blank row below each row
+    For i = LastRow To 1 Step -1
+        ws.Rows(i + 1).Insert
+    Next i
+End Sub
+
+Sub RemoveBlankRows()
+    Dim ws As Worksheet
+    Dim LastRow As Long
+    Dim i As Long
+    
+    ' Specify the worksheet you want to work with
+    Set ws = ThisWorkbook.Sheets("Sheet1") ' Change "Sheet1" to your sheet's name
+    
+    ' Find the last row with data in column A
+    LastRow = ws.Cells(ws.Rows.Count, "A").End(xlUp).Row
+    
+    ' Loop through the rows in reverse order and remove blank rows
+    For i = LastRow To 1 Step -1
+        If Application.WorksheetFunction.CountA(ws.Rows(i)) = 0 Then
+            ws.Rows(i).Delete
+        End If
+    Next i
+End Sub
+Sub UnmergeAllCellsInActiveSheet()
+    Dim ws As Worksheet
+    Set ws = ActiveSheet
+    
+    On Error Resume Next
+    ws.Cells.UnMerge
+    On Error GoTo 0
+End Sub
+'This code will convert all formulas into values
+Sub ConvertToValues()
+With ActiveSheet.UsedRange
+.Value = .Value
+End With
+End Sub
+Sub AutoFitColumns()
+Cells.Select
+Cells.EntireColumn.AutoFit
+End Sub
+Sub RemoveTextWrap()
+Range("A1").WrapText = False
+End Sub
+
+
