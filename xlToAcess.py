@@ -2,8 +2,8 @@ import pandas as pd
 import pyodbc
 
 # Define the Excel file path and Access database file path
-excel_file = 'book1.xlsx'
-access_db_file = r'C:\Users\DELL\Documents\Python Scripts\users.accdb'
+excel_file = input("Enter the path for the excel file to upload to Access DB: ")
+access_db_file = input("Enter the path for the AceessDB file: ")
 
 # Establish a connection to the Access database
 conn = pyodbc.connect(r'DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=' + access_db_file)
