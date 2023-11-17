@@ -1,2 +1,7 @@
-#command for updating python packages 
+#command for updating python packages in one go
 pip freeze | %{$_.split('==')[0]} | %{pip install --upgrade $_}
+
+#If you cannot use Firefox and have to use a Chromium based browser (e.g., Edge, Chrome), you can pass the proxy listener to the browser using a command line switch instead of using the OS proxy settings.
+E.g., for Edge:
+"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" --proxy-server="http://localhost:8080"
+
