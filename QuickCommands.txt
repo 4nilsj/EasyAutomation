@@ -5,3 +5,6 @@ pip freeze | %{$_.split('==')[0]} | %{pip install --upgrade $_}
 E.g., for Edge:
 "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" --proxy-server="http://localhost:8080"
 
+=if(iserror(match(cell,array,0)),false,true)
+
+
